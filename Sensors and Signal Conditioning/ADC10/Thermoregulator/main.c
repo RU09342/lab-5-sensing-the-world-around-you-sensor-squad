@@ -13,10 +13,11 @@
 void TimerInit(void);
 void ADC10Init(void);
 void UARTInit(void);
+void formatAndSend(int value);
 
-//unsigned int tempC = 0
-long tempF = 0;
-long in = 0;
+unsigned int in = 0;
+int ADC10MSB = 0;
+int ADC10LSB = 0;
 
 int main(void)
 {
@@ -37,18 +38,21 @@ __interrupt void ADC10_ISR(void)
   ADC10CTL0 &= ~ENC;                        // ADC10 disabled
   ADC10CTL0 = 0;                            // ADC10, Vref disabled
   in = ADC10MEM;
-//  tempC = in /100;
-//  tempF=9*tempC/5+32;
-  tempF = ((in - 630) * 761) / 1024;        //Conversion from ADC10 sample to temp F
 
-  UCA0TXBUF = tempF;                        //send TempF to TX
+   ADC10MSB = in >> 8;
+   ADC10LSB = in & 0xFF;
+
+      UCA0TXBUF = ADC10MSB;                  //send TempF to TX
+      while(!(IFG2 & UCA0TXIFG));              // Waits for the TX buffer to be cleared
+      UCA0TXBUF = ADC10LSB;                  // Transmits the LSB second
 }
 //Timer ISR
 #pragma vector=TIMER0_A0_VECTOR
 __interrupt void Timer_A(void)
 
 {
-  ADC10CTL0 = SREF_1 + ADC10SHT_2 + REFON + ADC10ON + ADC10IE;    // from TI exmaple code
+  ADC10CTL0 = SREF_1 + ADC10SHT_2 + REFON + ADC10ON + ADC10IE;
+ // VR+ = VREF+ and VR- = AVSS, 16 x ADC10CLKs, ADC10 Reference on, ADC10 On/Enable, ADC10 Interrupt Enable _ from TI exmaple code
   ADC10CTL0 |= ENC;                         // ADC10 enable set
 }
 //ADC Initialization
