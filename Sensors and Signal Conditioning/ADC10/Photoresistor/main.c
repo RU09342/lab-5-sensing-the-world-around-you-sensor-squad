@@ -1,22 +1,22 @@
-//Jessica Wozniak
+//Jessica Wozniak & Ryan Hare
 //Lab 5 Sensors: ADC10 MSP430G2553- Photoresistor
 //Created: 11/7/17
-//Last updated: 11/9/17
+//Last updated: 11/10/17
 
 #include <msp430.h>
 
-#define ADC10 BIT7
-#define LED1 BIT0
-#define RXD BIT1
-#define TXD BIT2
+#define ADC10 BIT7          //define ADC10 as BIT7
+#define LED1 BIT0           //define LED1 as BIT0
+#define RXD BIT1            //define RXD as BIT1
+#define TXD BIT2            //define TXD as BIT2
 
-void TimerInit(void);
-void ADC10Init(void);
-void UARTInit(void);
+void TimerInit(void);      //Timer function
+void ADC10Init(void);      //ADC10 function
+void UARTInit(void);       //UART function
 
 unsigned int in = 0;
-char tempFMSB = 0;
-char tempFLSB = 0;
+char ADCMSB = 0;
+char ADCLSB = 0;
 
 int main(void)
 {
@@ -39,12 +39,12 @@ __interrupt void ADC10_ISR(void)
 
     in = ADC10MEM;
 
-    tempFMSB = in >> 8;
-    tempFLSB = in & 0xFF;
+    ADCMSB = in >> 8;                      //shifts in to get msb
+    ADCLSB = in & 0xFF;                    //
 
-    UCA0TXBUF = tempFMSB;                  //send TempF to TX
-    while(!(IFG2 & UCA0TXIFG));              // Waits for the TX buffer to be cleared
-    UCA0TXBUF = tempFLSB;                  // Transmits the LSB second
+    UCA0TXBUF = ADCMSB;                  //send MSB to TX
+    while(!(IFG2 & UCA0TXIFG));          // Waits for TX to be cleared
+    UCA0TXBUF = ADCLSB;                  //sends LSB to TX
 }
 //Timer ISR
 #pragma vector=TIMER0_A0_VECTOR
@@ -59,17 +59,16 @@ __interrupt void Timer_A(void)
 void ADC10Init()
 {
       ADC10CTL1 = INCH_7 + SHS_1;             // P1.7, TA1 trigger sample start
-      ADC10AE0 = ADC10;                        // P1.7 ADC10 option select
-      P1DIR |= LED1;                          // Set P1.0 to output direction
+      ADC10AE0 = ADC10;                       // P1.7 ADC10 option select
+      P1DIR |= LED1;                          // LED1 output
 }
 // Timer Initialization
 void TimerInit()
 {
-    TACCTL0 = CCIE;                           // Enable interrupt
-    TACCR0 = 4096-1;                          // PWM Period
-    TACCTL1 = OUTMOD_3;                       // TACCR1 set/reset
-    TACCR1 = 256;                             // TACCR1 PWM Duty Cycle
-    TACTL = TASSEL_1 + MC_1 + ID_3;           // ACLK, up mode
+    TA0CCTL0 = CCIE;      // Emables Timer_A interrupts
+    TA0CTL   = TASSEL_1   // Uses SMCLK
+             + MC_1;      // Counts in Up-Mode
+    TA0CCR0  = 12800;     // Samples ~ every second
 }
 //UART Initialization
 void UARTInit()

@@ -13,7 +13,6 @@
 void TimerInit(void);
 void ADC10Init(void);
 void UARTInit(void);
-void formatAndSend(int value);
 
 unsigned int in = 0;
 int ADCMSB = 0;
