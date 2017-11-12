@@ -14,10 +14,14 @@ void TimerInit(void);      //Timer function
 void ADC12Init(void);      //ADC10 function
 void UARTInit(void);       //UART function
 void GPIOInit(void);
+void ClockInit(void);
 
 unsigned int in = 0;
 char ADCMSB = 0;
 char ADCLSB = 0;
+
+unsigned int resistance = 0;
+float voltage = 0;
 
 int main(void)
 {
@@ -27,10 +31,11 @@ int main(void)
   TimerInit();                  //Timer Function
   UARTInit();                   //UART Function
   GPIOInit();                   //GPIO Function
+  ClockInit();                  //Clock Function
 
   PM5CTL0 &= ~LOCKLPM5;
 
-  __bis_SR_register(LPM0_bits + GIE);      // LPM0, ADC10_ISR will force exit
+  __bis_SR_register(GIE);      // Global Interrupt Enable
 
     while(1){
     }
@@ -50,6 +55,12 @@ __interrupt void ADC12_ISR(void)
     UCA0TXBUF = ADCMSB;                  //send MSB to TX
     while(!(UCA0IFG&UCTXIFG));          // Waits for TX to be cleared
     UCA0TXBUF = ADCLSB;                  //sends LSB to TX
+
+
+    voltage = in/1000;                               //mV to V
+    resistance= (3300.0/volt) - 1000;               //using voltage divider equation to get phototransistor value
+    while(!(UCA0IFG&UCTXIFG));
+    UCA0TXBUF = resistance;                        //send resistace valeu to TX
 }
 
 //Timer ISR
@@ -67,28 +78,29 @@ void ADC12Init()
     ADC12CTL2 |= ADC12RES_2;                  // 12-bit conversion results
     ADC12IER0 |= ADC12IE0;                    // Enable ADC conv complete interrupt
     ADC12MCTL0 |= ADC12INCH_4;                // A1 ADC input select; Vref=1.2V
-    P1OUT = BIT0;                           // Clear LED to start
+    P1OUT = BIT0;                             // Clear LED to start
 
 }
 // Timer Initialization
 void TimerInit()
 {
-    TA0CCTL0 = CCIE;      // Emables Timer_A interrupts
-    TA0CTL   = TASSEL_1   // Uses SMCLK
-             + MC_1;      // Counts in Up-Mode
-    TA0CCR0  = 12800;     // Samples ~ every second
+    TA0CCTL0 = CCIE;                           // Enable interrupt
+    TA0CCR0 = 4096-1;                           // PWM Period
+    TA0CTL = TASSEL_1 + MC_1;                   // ACLK, CONT MODE
+}
+void ClockInit()
+{
+    CSCTL0_H = CSKEY >> 8;                    // Unlock clock registers
+    CSCTL1 = DCOFSEL_3 | DCORSEL;             // Set DCO to 8MHz
+    CSCTL2 = SELA__VLOCLK | SELS__DCOCLK | SELM__DCOCLK;
+    CSCTL3 = DIVA__1 | DIVS__1 | DIVM__1;     // Set all dividers
+    CSCTL0_H = 0;                             // Lock CS registers
 }
 //UART Initialization
 void UARTInit()
 {
       P2SEL0 |= RXD | TXD;                    // P2.0 = RXD, P2.1=TXD
       P2SEL1 &= ~(RXD | TXD);                 // P2.0 = RXD, P2.1=TXD
-
-      CSCTL0_H = CSKEY >> 8;                    // Unlock clock registers
-      CSCTL1 = DCOFSEL_3 | DCORSEL;             // Set DCO to 8MHz
-      CSCTL2 = SELA__VLOCLK | SELS__DCOCLK | SELM__DCOCLK;
-      CSCTL3 = DIVA__1 | DIVS__1 | DIVM__1;     // Set all dividers
-      CSCTL0_H = 0;                             // Lock CS registers
 
       UCA0CTLW0 = UCSWRST;                      // Put eUSCI in reset
       UCA0CTLW0 |= UCSSEL__SMCLK;               // CLK = SMCLK
@@ -102,6 +114,6 @@ void GPIOInit(void)
     // GPIO Setup
     P1OUT &= ~BIT0;                           // Clear LED to start
     P1DIR |= BIT0;                            // P1.0 output
-    P1SEL1 |= BIT4;                           // Configure P1.4 for ADC
-    P1SEL0 |= BIT4;
+    P1SEL1 |= ADC12;                           // Configure P1.4 for ADC
+    P1SEL0 |= ADC12;
 }
