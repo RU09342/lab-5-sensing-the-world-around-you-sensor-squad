@@ -1,23 +1,30 @@
 # Sensors and Signal Conditioning
 * Created by Ryan Hare & Jessica Wozniak
 * Created on 10/31/17
-* Last Updated: 11/8/17
+* Last Updated: 11/9/17
 
-One of the biggest limitations of the microcontroller is the fact that it lives in a digital world. We need certain components to be able to translate the analog world to the digital world and vice-versa. In this lab, we need to be able to convert some electrical phenomena into something our microcontroller can understand. For this, we need a few building blocks to do this.
+## Overview 
 
-## Sensors Used
-* Photoresistor
-* Phototransistor
-* Thermoregulator
-
-* Voltage
-* Current
-* Resistance
-
-## ADC10
-
-## ADC12
+##Photoresistor: Resistance
+The easiest way to find the resitance of the photoresistor is by using a voltage divider and finding Vout. The Vout can then be used in the voltge divider equation to find the resistance in the photoresistor. The ADC reads from the between two resistances. Referencing the equation below, R2 will be conatsnt (1000), Vin will be constant(3.3V), and based off the value of ADC (Vout), the resistance can be found for the photoresistor(R1). 
+### Schematic 
 
 ### Hardware
-The hardware portion should be the same for each of the processors. You will need to have a total of 3 circuits made, each corresponding to a different sensor. You need to look at the range of measurements and the amount of resolution you can get out of your ADC and determine how to convert, scale, and filter your signal. Don't forget the fact that you will need to convert to a voltage, making some of these circuits not so trivial. The main goal as the hardware designer for these sensors is to provide the microprocessor with the best resolution to maximize the effectiveness of the ADC.
+
+
+## Phototransistor: Current 
+### Schematic 
+### Hardware
+
+## Temperature Sensor: Voltage
+### Schematic 
+### Hardware
+## Similarities in ADC10 and ADC12
+
+## Differences in ADC10 and ADC12
+### ADC10
+The MSP430G2553 was used to implement ADC10.
+### ADC12
+The MSP430FR6989 was used to implement ADC12.
+
 
