@@ -1,7 +1,7 @@
-//Jessica Wozniak
+//Jessica Wozniak & Ryan Hare
 //Lab 5 Sensors: ADC10 MSP430G2553- Temperature Sensor
 //Created: 11/7/17
-//Last updated: 11/9/17
+//Last updated: 11/10/17
 
 #include <msp430.h>
 
@@ -16,8 +16,8 @@ void UARTInit(void);
 void formatAndSend(int value);
 
 unsigned int in = 0;
-int ADC10MSB = 0;
-int ADC10LSB = 0;
+int ADCMSB = 0;
+int ADCLSB = 0;
 
 int main(void)
 {
@@ -39,12 +39,12 @@ __interrupt void ADC10_ISR(void)
   ADC10CTL0 = 0;                            // ADC10, Vref disabled
   in = ADC10MEM;
 
-   ADC10MSB = in >> 8;
-   ADC10LSB = in & 0xFF;
+   ADCMSB = in >> 8;
+   ADCLSB = in & 0xFF;
 
-      UCA0TXBUF = ADC10MSB;                  //send TempF to TX
+      UCA0TXBUF = ADCMSB;                  //send TempF to TX
       while(!(IFG2 & UCA0TXIFG));              // Waits for the TX buffer to be cleared
-      UCA0TXBUF = ADC10LSB;                  // Transmits the LSB second
+      UCA0TXBUF = ADCLSB;                  // Transmits the LSB second
 }
 //Timer ISR
 #pragma vector=TIMER0_A0_VECTOR
