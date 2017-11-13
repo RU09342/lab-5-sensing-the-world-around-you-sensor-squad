@@ -7,7 +7,7 @@
 
 ## Photoresistor: Resistance
 The easiest way to find the resitance of the photoresistor is by using a voltage divider. Using the ADC, Vout can be found and then be used in the voltge divider equation to find the resistance in the photoresistor. The ADC reads from the between two resistances. Referencing the equation below, R2 will be conatsnt (1000), Vin will be constant(3.3V), and based off the value of ADC (Vout), the resistance can be found for the photoresistor(R1). 
-
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/Voltage%20Divider.png)
 ### Schematic 
 ![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/Photoresistor.PNG)
 ### Hardware
