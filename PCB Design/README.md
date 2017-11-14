@@ -1,12 +1,18 @@
 # PCB Design
-* Created by Ryan Hare
-* Created on 10/18/17
-* Last Updated: 11/1/17
+### Created by Ryan Hare
+### Created on 10/18/17
+### Last Updated: 11/1/17
 
-## Bill of Materials
+## Overview 
+### Schematic
 
-The README for this folder should also contain the Bill of Materials as well as (if possible) a link to a Digikey/Mouser cart that contains the parts you would want for this board.
+
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/PCB_Schematic.PNG)
+### PCB
 
 
-determine the capacitor brands, values, and sizes
-which package you want for your MSP430FR2311?
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/PCB.PNG)
+### PCB 3D
+
+
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/PCB_3D.PNG)
