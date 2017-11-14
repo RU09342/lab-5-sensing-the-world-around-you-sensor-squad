@@ -32,6 +32,23 @@ The easiest way to find the resitance of the photoresistor is by using a voltage
 ## Differences in ADC10 and ADC12
 ### ADC10
 The MSP430G2553 was used to implement ADC10.
+``` C
+#include <msp430.h>
+
+#define ADC10 BIT7          //define ADC10 as BIT7
+#define LED1 BIT0           //define LED1 as BIT0
+#define RXD BIT1            //define RXD as BIT1
+#define TXD BIT2            //define TXD as BIT2
+
+void TimerInit(void);      //Timer function
+void ADC10Init(void);      //ADC10 function
+void UARTInit(void);       //UART function
+void ClockInit(void);      //Clock function
+
+unsigned int in = 0;
+char ADCMSB = 0;          //ADC10 Most significant bits
+char ADCLSB = 0;          //ADC10 Least significant bits
+```
 ### ADC12
 The MSP430FR6989 was used to implement ADC12.
 
