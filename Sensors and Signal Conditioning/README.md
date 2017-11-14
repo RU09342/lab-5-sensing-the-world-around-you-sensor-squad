@@ -18,7 +18,7 @@ The easiest way to find the resitance of the photoresistor is by using a voltage
 ### Hardware
 
 
-![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/Photoresistor.jpg)
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/photoresistor.jpg) 
 
 ## Phototransistor: Current 
 ### Schematic 
