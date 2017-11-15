@@ -1,23 +1,55 @@
 # Sensors and Signal Conditioning
 * Created by Ryan Hare & Jessica Wozniak
 * Created on 10/31/17
-* Last Updated: 11/8/17
+* Last Updated: 11/9/17
 
-One of the biggest limitations of the microcontroller is the fact that it lives in a digital world. We need certain components to be able to translate the analog world to the digital world and vice-versa. In this lab, we need to be able to convert some electrical phenomena into something our microcontroller can understand. For this, we need a few building blocks to do this.
+## Overview 
 
-## Sensors Used
-* Photoresistor
-* Phototransistor
-* Thermoregulator
+## Photoresistor: Resistance
+The easiest way to find the resitance of the photoresistor is by using a voltage divider. Using the ADC, Vout can be found and then be used in the voltge divider equation to find the resistance in the photoresistor. The ADC reads from the between two resistances. Referencing the equation below, R2 will be conatsnt (1000), Vin will be constant(3.3V), and based off the value of ADC (Vout), the resistance can be found for the photoresistor(R1). 
 
-* Voltage
-* Current
-* Resistance
 
-## ADC10
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/Voltage%20Divider.png)
 
-## ADC12
+### Schematic 
 
+
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/Photoresistor.PNG)
 ### Hardware
-The hardware portion should be the same for each of the processors. You will need to have a total of 3 circuits made, each corresponding to a different sensor. You need to look at the range of measurements and the amount of resolution you can get out of your ADC and determine how to convert, scale, and filter your signal. Don't forget the fact that you will need to convert to a voltage, making some of these circuits not so trivial. The main goal as the hardware designer for these sensors is to provide the microprocessor with the best resolution to maximize the effectiveness of the ADC.
+
+
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/photoresistor.jpg) 
+
+## Phototransistor: Current 
+### Schematic 
+### Hardware
+
+## Temperature Sensor: Voltage
+### Schematic 
+### Hardware
+## Similarities in ADC10 and ADC12
+
+## Differences in ADC10 and ADC12
+### ADC10
+The MSP430G2553 was used to implement ADC10.
+``` C
+#include <msp430.h>
+
+#define ADC10 BIT7          //define ADC10 as BIT7
+#define LED1 BIT0           //define LED1 as BIT0
+#define RXD BIT1            //define RXD as BIT1
+#define TXD BIT2            //define TXD as BIT2
+
+void TimerInit(void);      //Timer function
+void ADC10Init(void);      //ADC10 function
+void UARTInit(void);       //UART function
+void ClockInit(void);      //Clock function
+
+unsigned int in = 0;
+char ADCMSB = 0;          //ADC10 Most significant bits
+char ADCLSB = 0;          //ADC10 Least significant bits
+```
+### ADC12
+The MSP430FR6989 was used to implement ADC12.
+
 
