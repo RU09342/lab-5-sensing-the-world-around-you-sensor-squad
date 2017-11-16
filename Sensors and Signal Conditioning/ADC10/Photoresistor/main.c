@@ -12,6 +12,7 @@
 void TimerInit(void);      //Timer function
 void ADC10Init(void);      //ADC10 function
 void UARTInit(void);       //UART function
+void ClockInit(void);      //Clock Function
 
 unsigned int in = 0;
 float voltage;
@@ -24,6 +25,7 @@ int main(void)
   ADC10Init();                  //ADC10 Function
   TimerInit();                  //Timer Function
   UARTInit();                   //UART Function
+  ClockInit();                  //Clock Function call
 
   __bis_SR_register(GIE);       //interrupt enable
     while(1){
@@ -73,13 +75,15 @@ void UARTInit()
       P1SEL = RXD + TXD;                      // P1.1 = RXD, P1.2=TXD
       P1SEL2 = RXD + TXD;                     // P1.1 = RXD, P1.2=TXD
 
-      DCOCTL = 0;                             // Select lowest DCOx and MODx settings
-      BCSCTL1 = CALBC1_1MHZ;                  // Set DCO
-      DCOCTL = CALDCO_1MHZ;
-
       UCA0CTL1 |= UCSSEL_2;                   // SMCLK
       UCA0BR0 = 104;                          // 9600 baud
       UCA0BR1 = 0;                            // 9600 baud
       UCA0MCTL = UCBRS0;                      // Modulation UCBRSx = 1
       UCA0CTL1 &= ~UCSWRST;                   // **Initialize USCI state machine**
+}
+void ClockInit()
+{
+    DCOCTL = 0;                             // Select lowest DCOx and MODx settings
+    BCSCTL1 = CALBC1_1MHZ;                  // Set DCO
+    DCOCTL = CALDCO_1MHZ;
 }
