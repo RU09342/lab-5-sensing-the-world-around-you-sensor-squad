@@ -32,19 +32,21 @@ The easiest way to find the resitance of the photoresistor is by using a voltage
 
 ### ADC
 For this lab ADC10 and ADC12 were implemented on seperate boards. The ADC10 was implemented on the MSP430G2553 and the ADC12 on the MSP430FR6989. To begin initilzation of the ADC, a pin must be set on which the ADC will be taken (P1.7 ADC10 & P1.4 ADC12). In the ADC10 code Then the ADC signal is sent back to the MSP430. 
-###Photoresistor
+
+
+### Photoresistor
 ```C
     in = ADC12MEM0;
     voltage = in * 0.0033;                      //converts ADC to voltage
     resistance=(3300.0/voltage) - 1000;         //Using ohms law we can find resistance
 ```
-###Phototransistor
+### Phototransistor
 ```C
     in = ADC10MEM;
     voltage = in * 0.0033;                      //Takes in ADC value and converts it to voltage
     current= voltage / 1000;                    //Using ohms law we can find current
 ```
-###Temperature Sensor
+### Temperature Sensor
 To take the ADC value and output a temperature some manipulation was done. The LM35 reads every 10mV as one degree C. As stated above the reference voltage was set to 3.3 V for ADC10 and 1.2V for ADC12. To find the value of each bit for ADC, the reference voltage is divided by 2^(n); where n is the ADC resolution (for this code 10 or 12). 
 ```C
   in = ADC10MEM;
