@@ -85,7 +85,8 @@ After voltage is found, Ohm's law can be used to find the current.
     current= voltage / 1000;                      //Using ohms law we can find current
 ```
 ### Temperature Sensor
-To take the ADC value and output a temperature some manipulation was done. The LM35 reads every 10mV as one degree C. So to find the voltage at the output of the LM35, The volatge is then divided by 0.01 to find Temp C. After Temp C is found, a simple conversion is used to find Temp F. 
+To take the ADC value and output a temperature some manipulation was done. The LM35 reads every 10mV as one degree C. After the volatge is found, it 
+is then divided by 0.01 to find Temp C. After Temp C is found, a simple conversion is used to find Temp F. 
 ```C
   in = ADC12MEM0;
   voltage = in * 0.000293;              //Converts ADC to voltage. (Vref/2^12) = 0.000293 * ADC = voltage
