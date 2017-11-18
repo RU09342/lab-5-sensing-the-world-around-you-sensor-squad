@@ -27,29 +27,29 @@ The easiest way to find the resitance of the photoresistor is by using a voltage
 ## Temperature Sensor: Voltage
 ### Schematic 
 ### Hardware
-## Similarities in ADC10 and ADC12
 
-## Differences in ADC10 and ADC12
-### ADC10
-The MSP430G2553 was used to implement ADC10.
-``` C
-#include <msp430.h>
+## Software
 
-#define ADC10 BIT7          //define ADC10 as BIT7
-#define LED1 BIT0           //define LED1 as BIT0
-#define RXD BIT1            //define RXD as BIT1
-#define TXD BIT2            //define TXD as BIT2
-
-void TimerInit(void);      //Timer function
-void ADC10Init(void);      //ADC10 function
-void UARTInit(void);       //UART function
-void ClockInit(void);      //Clock function
-
-unsigned int in = 0;
-char ADCMSB = 0;          //ADC10 Most significant bits
-char ADCLSB = 0;          //ADC10 Least significant bits
+### ADC
+For this lab ADC10 and ADC12 were implemented on seperate boards. The ADC10 was implemented on the MSP430G2553 and the ADC12 on the MSP430FR6989. To begin initilzation of the ADC, a pin must be set on which the ADC will be taken (P1.7 ADC10 & P1.4 ADC12). In the ADC10 code Then the ADC signal is sent back to the MSP430. 
+###Photoresistor
+```C
+    in = ADC12MEM0;
+    voltage = in * 0.0033;                      //converts ADC to voltage
+    resistance=(3300.0/voltage) - 1000;         //Using ohms law we can find resistance
 ```
-### ADC12
-The MSP430FR6989 was used to implement ADC12.
-
+###Phototransistor
+```C
+    in = ADC10MEM;
+    voltage = in * 0.0033;                      //Takes in ADC value and converts it to voltage
+    current= voltage / 1000;                    //Using ohms law we can find current
+```
+###Temperature Sensor
+To take the ADC value and output a temperature some manipulation was done. The LM35 reads every 10mV as one degree C. As stated above the reference voltage was set to 3.3 V for ADC10 and 1.2V for ADC12. To find the value of each bit for ADC, the reference voltage is divided by 2^(n); where n is the ADC resolution (for this code 10 or 12). 
+```C
+  in = ADC10MEM;
+  voltage = in * 0.0033;                //Converts ADC to voltage. (Vref/2^10) = 0.0033 * ADC = voltage
+  tempC = voltage / 0.01;               //For LM35 each degree C is 10mv (0.01V)
+  tempF=((9*(tempC))/5)+32;             //converts degrees C to degrees F
+```
 
