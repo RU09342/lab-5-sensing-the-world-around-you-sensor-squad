@@ -9,6 +9,7 @@
 The easiest way to find the resitance of the photoresistor is by using a voltage divider. Using the ADC, Vout can be found and then be used in the 
 voltge divider equation to find the resistance in the photoresistor. The ADC reads from the between two resistances. Referencing the equation below, 
 R2 will be conatsnt (1000), Vin will be constant(3.3V), and based off the value of ADC (Vout), the resistance can be found for the photoresistor(R1). 
+When there is more light the resistance is lower and when there is less light the resistance is higher.  
 
 
 ![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/Voltage%20Divider.png)
@@ -23,11 +24,18 @@ R2 will be conatsnt (1000), Vin will be constant(3.3V), and based off the value 
 ![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/photoresistor.jpg) 
 
 ## Phototransistor: Current 
+The Phototransistor used was an OP805SL. In reference to the schematic below, the reason the ADC value changes with light is because the phototransistor lets more current 
+pass when more light shines on it, or less current pass with less light. Also the use of a smaller resistor is less sensitive to light, whereas 
+if a higher value resistor is used, the photoresistor is more sensitive to light.
+
 ### Schematic 
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/Phototransistor.PNG)
 ### Hardware
 
 ## Temperature Sensor: Voltage
+The temperature sensor that was used was a LM35. The LM35 reads every 10mV as one degree C. The ADC was read directly at the output of the LM35. 
 ### Schematic 
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/LM35_Schematic.PNG)
 ### Hardware
 
 ## Software
@@ -53,7 +61,7 @@ CTL2 was set to set ADC to 12 bit resolution. Then the ADC interrupt was enabled
 ```
 Within the Timer interrupt, CTL0 was then set to enable and sample ADC.
 ```C
-	ADC12CTL0 |= ADC12SC | ADC12ENC;
+	ADC12CTL0 |= ADC12SC | ADC12ENC;		  //ADC sample and enable
 ```
 Then the ADC value was sent back to the MSP430, where it underwent calcuations to output wanted information. Within the ADC interrupt, 
 the below calcuations were computed. 
