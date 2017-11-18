@@ -52,7 +52,9 @@ CTL2 was set to set ADC to 12 bit resolution. Then the ADC interrupt was enabled
     ADC12MCTL0 |= ADC12INCH_4;                // A1 ADC input select
 ```
 Within the Timer interrupt, CTL0 was then set to enable and sample ADC.
- 
+```C
+	ADC12CTL0 |= ADC12SC | ADC12ENC;
+```
 Then the ADC value was sent back to the MSP430, where it underwent calcuations to output wanted information. Within the ADC interrupt, 
 the below calcuations were computed. 
 
