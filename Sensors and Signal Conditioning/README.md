@@ -33,21 +33,23 @@ The easiest way to find the resitance of the photoresistor is by using a voltage
 ### ADC
 For this lab ADC10 and ADC12 were implemented on seperate boards. The ADC10 was implemented on the MSP430G2553 and the ADC12 on the MSP430FR6989. To begin initilzation of the ADC, a pin must be set on which the ADC will be taken (P1.7 ADC10 & P1.4 ADC12). In the ADC10 code Then the ADC signal is sent back to the MSP430. 
 
-
+As stated above the reference voltage was set to 3.3 V for ADC10 and 1.2V for ADC12. To find the value of each bit for ADC, the reference voltage is divided by 2^(n); where n is the ADC resolution (for this code 10 or 12). So to find the voltage, the value in the ADC memory register is multiplied by the either 0.0033 (ADC10) or 0.000293(ADC12). 
 ### Photoresistor
+After voltage is found, Ohm's law can be used to find the resistance of the photoresistor.
 ```C
-    in = ADC12MEM0;
+    in = ADC10MEM;
     voltage = in * 0.0033;                      //converts ADC to voltage
     resistance=(3300.0/voltage) - 1000;         //Using ohms law we can find resistance
 ```
 ### Phototransistor
+After voltage is found, Ohm's law can be used to find the current.
 ```C
     in = ADC10MEM;
     voltage = in * 0.0033;                      //Takes in ADC value and converts it to voltage
     current= voltage / 1000;                    //Using ohms law we can find current
 ```
 ### Temperature Sensor
-To take the ADC value and output a temperature some manipulation was done. The LM35 reads every 10mV as one degree C. As stated above the reference voltage was set to 3.3 V for ADC10 and 1.2V for ADC12. To find the value of each bit for ADC, the reference voltage is divided by 2^(n); where n is the ADC resolution (for this code 10 or 12). 
+To take the ADC value and output a temperature some manipulation was done. The LM35 reads every 10mV as one degree C. So to find the voltage at the output of the LM35, The volatge is then divided by 0.01 to find Temp C. After Temp C is found, a simple conversion is used to find Temp F. 
 ```C
   in = ADC10MEM;
   voltage = in * 0.0033;                //Converts ADC to voltage. (Vref/2^10) = 0.0033 * ADC = voltage
