@@ -1,11 +1,11 @@
 //Jessica Wozniak & Ryan Hare
 //Lab 5 Sensors: ADC12 MSP430FR6989- Temp Sense
 //Created: 11/7/17
-//Last updated: 11/15/17
+//Last updated: 11/18/17
 
 #include <msp430.h>
 
-#define ADC12 BIT4          //define ADC12 as BIT4
+#define ADC12 BIT7          //define ADC12 as BIT4
 #define LED1 BIT0           //define LED1 as BIT0
 #define RXD BIT0            //define RXD as BIT0
 #define TXD BIT1            //define TXD as BIT1
@@ -24,17 +24,23 @@ float tempF;
 int main(void)
 {
   WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
-
-  ADC12Init();                  //ADC10 Function
-  TimerInit();                  //Timer Function
-  UARTInit();                   //UART Function
-  GPIOInit();                   //GPIO Function
-  ClockInit();
-
   PM5CTL0 &= ~LOCKLPM5;         //disable HIGH-Z mode
 
-  __bis_SR_register(GIE);      // Global Interrupt Enable
+  GPIOInit();                   //GPIO Function
+  TimerInit();                  //Timer Function
+  UARTInit();                   //UART Function
+  ClockInit();                  //Clock function
+
+  while(REFCTL0 & REFGENBUSY);              // If ref generator busy, WAIT
+   REFCTL0 |= REFVSEL_0 | REFON;             // Select internal ref = 1.2V
+                                             // Internal Reference ON
+  ADC12Init();                  //ADC12 Function
+
+  while(!(REFCTL0 & REFGENRDY));            // Wait for reference generator to settle
+
   while(1){
+      __bis_SR_register(LPM0_bits + GIE);      // LPM0, ADC10_ISR will force exit
+      __no_operation();
   }
 }
 //ADC ISR
@@ -42,7 +48,7 @@ int main(void)
 __interrupt void ADC12_ISR(void)
 {
     in = ADC12MEM0;
-    voltage = in * 0.000234;        //converts ADC to voltage
+    voltage = in * 0.000293;        //converts ADC to voltage
     tempC= voltage/ 0.01;           //converts voltage to Temp C
     tempF=((9*tempC)/5)+32;             //Temp C to Temp F
 
@@ -57,6 +63,7 @@ __interrupt void Timer_A(void)
 {
     ADC12CTL0 |= ADC12SC | ADC12ENC;         //sample/ enable
 }
+
 //ADC Initialization
 void ADC12Init()
 {
@@ -64,7 +71,7 @@ void ADC12Init()
     ADC12CTL1 = ADC12SHP;                     // ADCCLK = MODOSC; sampling timer
     ADC12CTL2 |= ADC12RES_2;                  // 12-bit conversion results
     ADC12IER0 |= ADC12IE0;                    // Enable ADC conv complete interrupt
-    ADC12MCTL0 |= ADC12INCH_4;                // A1 ADC input select
+    ADC12MCTL0 |= ADC12INCH_4 | ADC12VRSEL_1; // A4 ADC input select, Vref = 1.2V
     P1OUT = LED1;                             // LED1 on
 }
 // Timer Initialization
@@ -100,8 +107,8 @@ void UARTInit()
 void GPIOInit(void)
 {
     // GPIO Setup
-    P1OUT &= ~BIT0;                           // Clear LED to start
-    P1DIR |= BIT0;                            // P1.0 output
-    P1SEL1 |= ADC12;                          // P1.4 for ADC
-    P1SEL0 |= ADC12;
+    P1OUT &= ~LED1;                           // Clear LED to start
+    P1DIR |= LED1;                            // P1.0 output
+    P8SEL1 |= ADC12;                          // P8.7 for ADC
+    P8SEL0 |= ADC12;
 }
