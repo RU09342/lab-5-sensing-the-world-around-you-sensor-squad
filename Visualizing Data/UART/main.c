@@ -100,8 +100,8 @@ void UARTInit(void){
         CSCTL3 = DIVA__1 | DIVS__1 | DIVM__1;       // Set all dividers
         CSCTL0_H = 0;                               // Lock CS registers
 
-        P2SEL0 &= ~(BIT0 | BIT1);
-        P2SEL1 |= BIT0+BIT1;
+        P1SEL0 |= BIT6 + BIT7;                      //Set P1SEL to 01 for p1.6 and p1.7
+        P1SEL1 &= ~(BIT6 + BIT7);
 
         // Configure USCI_A0 for UART mode
         UCA0CTLW0 = UCSWRST;                        // Put eUSCI in reset
