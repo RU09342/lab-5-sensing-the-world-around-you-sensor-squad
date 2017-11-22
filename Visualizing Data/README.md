@@ -107,10 +107,6 @@ void UARTInit(void){
         UCA0IE |= UCRXIE;                           // Enable USCI_A0 RX interrupt
 }
 ```
-In order to actually plot the data on the computer, it is necessary to use MATLAB. The MATLAB function shown below was based on MathWorks code ([which can be found here](https://www.mathworks.com/matlabcentral/fileexchange/25519-collect-and-plot-data-from-an-instrument-in-real-time)). This function will take the input from the serial port and graph the data as it is sent.
-
-```Matlab
-
-```
+In order to actually plot the data on the computer, it is necessary to use MATLAB. The SerialDataPlot.m function was based on MathWorks code ([which can be found here](https://www.mathworks.com/matlabcentral/fileexchange/25519-collect-and-plot-data-from-an-instrument-in-real-time)). This function reads the input from the serial port and graphs the data after a minute of reading.
 
 It may be necessary to configure the serial port based on how the microprocessor is connected. To do so, change the `COM3` in the `Matlab serialPort = 'COM3'` line to correctly reflect the COM port that your microprocessor is connected to. This can be found through device manager.
