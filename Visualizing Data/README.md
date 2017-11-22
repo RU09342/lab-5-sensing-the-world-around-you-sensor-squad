@@ -77,12 +77,12 @@ void DisplayNumbers(unsigned long num)      //Function takes in an integer of up
 After the the ADC returns a value for tempF, tempF is displayed on the LCD display. 
 ![Alt Text] (Add link to video of this working)
 
-##UART
-###Requirements
+## UART
+### Requirements
 For the UART visualization, the board is connected to a computer via UART. For the MSP430 boards, the USB cable will work.
 
 The MATLAB Serial Toolbox will be used to plot and visualize the data once it has been transferred to the computer.
-###Software
+### Software
 The same ADC code can be used for the UART visualization, however a UART initialize function will be needed. This will enable the microprocessor to output values over UART to the connected computer.
 
 The UART will be initialized to have a baud rate of 9600. If a USB cable is not used, the UART will use P1.6 as the Receive pin and P1.7 as the Transmit pin.
@@ -109,4 +109,4 @@ void UARTInit(void){
 ```
 In order to actually plot the data on the computer, it is necessary to use MATLAB. The SerialDataPlot.m function was based on MathWorks code ([which can be found here](https://www.mathworks.com/matlabcentral/fileexchange/25519-collect-and-plot-data-from-an-instrument-in-real-time)). This function reads the input from the serial port and graphs the data after a minute of reading.
 
-It may be necessary to configure the serial port based on how the microprocessor is connected. To do so, change the `COM3` in the `Matlab serialPort = 'COM3'` line to correctly reflect the COM port that your microprocessor is connected to. This can be found through device manager.
+It may be necessary to configure the serial port based on how the microprocessor is connected. To do so, change the `COM12` in the `serialPort = 'COM12'` line to correctly reflect the COM port that your microprocessor is connected to. This can be found through device manager.
