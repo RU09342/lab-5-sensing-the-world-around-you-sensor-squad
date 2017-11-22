@@ -33,7 +33,7 @@ void LEDChange()
         }
 }
 ```
-## LCD Display
+## LCD Display (MSP430FR6989)
 ### Software
 With the addition of a LCDInit() function, a DisplayNumbers() function, and including the LCDDriver.h file, it was simple to intergrate the two codes 
 together. 
@@ -77,7 +77,7 @@ void DisplayNumbers(unsigned long num)      //Function takes in an integer of up
 After the the ADC returns a value for tempF, tempF is displayed on the LCD display. 
 ![Alt Text] (Add link to video of this working)
 
-## UART
+## UART (MSP430FR6989)
 ### Requirements
 For the UART visualization, the board is connected to a computer via UART. For the MSP430 boards, the USB cable will work.
 
@@ -85,7 +85,7 @@ The MATLAB Serial Toolbox will be used to plot and visualize the data once it ha
 ### Software
 The same ADC code can be used for the UART visualization, however a UART initialize function will be needed. This will enable the microprocessor to output values over UART to the connected computer.
 
-The UART will be initialized to have a baud rate of 9600. If a USB cable is not used, the UART will use P1.6 as the Receive pin and P1.7 as the Transmit pin.
+The UART will be initialized to have a baud rate of 9600. If a USB cable is not used, the UART will use P2.1 as the Receive pin and P2.0 as the Transmit pin.
 ```C
 void UARTInit(void){
 
