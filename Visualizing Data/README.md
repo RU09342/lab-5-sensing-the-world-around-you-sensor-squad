@@ -4,10 +4,10 @@
 * Last Updated: 11/16/17
 
 ## Overview 
-Using the ADC12 code implemented in the "Sensors and Signal Conditioning" part of this lab, differnt types of data visualizations were possible.
+Using the ADC12 code implemented in the "Sensors and Signal Conditioning" part of this lab, several different types of data visualizations were possible.
 ## RGB LED (MSP430FR5994)
 ### Hardware
-This software is meant to be run with a common anode RGB LED. The LED circuit is shown below.
+This software is meant to be run with a common anode RGB LED. The LED circuit is shown below. The Green part of the RGB LED is unused for this circuit, as it only displays red, blue, or purple.
 ![LEDCircuit](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/tree/master/Visualizing%20Data/RGBLED/Assets/LEDCircuit.png?raw=true)
 Connecting the board to the RGB LED circuit will use different colors on the LED in order to show the temperature from the temperature sensor.
 ### Software
@@ -78,4 +78,8 @@ After the the ADC returns a value for tempF, tempF is displayed on the LCD displ
 ![Alt Text] (Add link to video of this working)
 
 ##UART
+###Requirements
+For the UART visualization, the board is connected to a computer via UART. For the MSP430 boards, the USB cable will work.
+
+The MATLAB Serial Toolbox will be used to plot and visualize the data once it has been transferred to the computer.
 ###Software
