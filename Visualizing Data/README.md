@@ -7,6 +7,9 @@
 Using the ADC12 code implemented in the "Sensors and Signal Conditioning" part of this lab, differnt types of data visualizations were possible.
 ## RGB LED (MSP430FR5994)
 ### Hardware
+This software is meant to be run with a common anode RGB LED. The LED circuit is shown below.
+![LEDCircuit](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/tree/master/Visualizing%20Data/RGBLED/Assets/LEDCircuit.png?raw=true)
+Connecting the board to the RGB LED circuit will use different colors on the LED in order to show the temperature from the temperature sensor.
 ### Software
 Some minor additions to the ADC12 code were needed, including a function LEDChange() that changes the color of the LED based on the temperature sensed
  by the LM35. If the temperature is above 75 F, the LED will be red and if the temperature is below 50F, the LED will be blue. If the temperature is in 
@@ -73,3 +76,6 @@ void DisplayNumbers(unsigned long num)      //Function takes in an integer of up
 ```
 After the the ADC returns a value for tempF, tempF is displayed on the LCD display. 
 ![Alt Text] (Add link to video of this working)
+
+##UART
+###Software
