@@ -4,30 +4,71 @@
 * Last Updated: 11/16/17
 
 ## Overview 
-Using the ADC12 code implemented in the "Sensors and Signal Conditioning" part of this lab, differnt types of data visualizations were possible.
+Using the ADC12 code implemented in the "Sensors and Signal Conditioning" part of this lab, different types of data visualizations were possible.
 ## RGB LED (MSP430FR5994)
 ### Hardware
+
 ### Software
-Some minor additions to the ADC12 code were needed, including a function LEDChange() that changes the color of the LED based on the temperature sensed
- by the LM35. If the temperature is above 75 F, the LED will be red and if the temperature is below 50F, the LED will be blue. If the temperature is in 
- between 50 - 75 F, the LED will be purple. 
+Some minor additions to the ADC12 code were needed, including the following in the while(1) loop in the main that changes the color of 
+the LED based on the temperature sensed by the LM35. If the temperature is above 90 F, the LED will be red and if the temperature is below 30F,
+ the LED will be blue. If the temperature is anywhere in between the LED will be maroon, pink, dark purple, indigo, blue, torquoise, or teal. 
 ```C
-void LEDChange()
-{
-    if (tempF > 75)           //if temperature is greater than 75 degrees F
-        {
-          TB0CCR1 = 0;          //Red
-        }
-    else if (tempF < 50)      //if temperature is lower than 50 degrees F
-        {
-          TB0CCR2 = 0;          //Blue
-        }
-    else
-        {
-         //purple when in between 50 and 75 F
-          TB0CCR1 = 127;      // 1/2 red
-          TB0CCR2 = 128;      // 1/2 blue
-        }
+    if(tempF > 90)
+    {
+        TB0CCR1 = 0xFF; //Red
+        TB0CCR2 = 0x00; //Green
+        TB0CCR3 = 0x00; //Blue
+    }
+    else if(tempF < 90 && tempF >=80 )
+    {
+        //Maroon C7046C
+        TB0CCR1 = 0xC7; //Red
+        TB0CCR2 = 0x04; //Green
+        TB0CCR3 = 0x6C; //Blue
+    }
+    else if(tempF < 80 && tempF >=70 )
+    {
+        //Pink FF17FF
+        TB0CCR1 = 0xFF; //Red
+        TB0CCR2 = 0x17; //Green
+        TB0CCR3 = 0xFF; //Blue
+    }
+    else if(tempF < 70 && tempF >=60 )
+    {
+        //Dark Purple 630AC9
+        TB0CCR1 = 0x63; //Red
+        TB0CCR2 = 0x0A; //Green
+        TB0CCR3 = 0xC9; //Blue
+    }
+    else if(tempF < 60 && tempF >=50 )
+    {
+        //Indigo 465ADE
+        TB0CCR1 = 0x46; //Red
+        TB0CCR2 = 0x5A; //Green
+        TB0CCR3 = 0xDE; //Blue
+    }
+    else if(tempF < 50 && tempF >=40 )
+    {
+        //Blue 0000FF
+        TB0CCR1 = 0x00; //Red
+        TB0CCR2 = 0x00; //Green
+        TB0CCR3 = 0xFF; //Blue
+    }
+    else if(tempF < 40 && tempF >=30 )
+    {
+        //Torquiose 0890A5
+        TB0CCR1 = 0x08; //Red
+        TB0CCR2 = 0x90; //Green
+        TB0CCR3 = 0xA5; //Blue
+    }
+
+    else if(tempF < 30 )
+    {
+        //Teal 0AFAEA
+        TB0CCR1 = 0x0A; //Red
+        TB0CCR2 = 0xFA; //Green
+        TB0CCR3 = 0xEA; //Blue
+    }
 }
 ```
 ## LCD Display
