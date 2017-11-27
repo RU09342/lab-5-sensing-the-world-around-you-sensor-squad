@@ -4,6 +4,7 @@
 * Last Updated: 11/15/17
 
 ## Overview 
+Circuits with sensors were connected and used with the ADC10 and ADC12 code to find resistance, current, and voltage. 
 
 ## Photoresistor: Resistance
 The easiest way to find the resitance of the photoresistor is by using a voltage divider. Using the ADC, Vout can be found and then be used in the 
@@ -44,8 +45,8 @@ The temperature sensor that was used was a LM35. The LM35 reads every 10mV as on
 For this lab ADC10 and ADC12 were implemented on seperate boards. The ADC10 was implemented on the MSP430G2553 and the ADC12 on the MSP430FR6989. 
 To begin initilzation of the ADC, a pin must be set on which the ADC will be taken (P1.7 ADC10 & P1.4 ADC12).
 ```C
-    P1SEL1 |= ADC12;                          // P1.4 for ADC
-    P1SEL0 |= ADC12;
+    P8SEL1 |= ADC12;                          // P8.7 for ADC
+    P8SEL0 |= ADC12;
 ```
 Other initializations that were needed for code to run properly were Timer Init, UART Init, and Clock Init.
 
@@ -53,11 +54,11 @@ Other initializations that were needed for code to run properly were Timer Init,
 In the ADC10 initilzation, control register 0-2 were set. CTL0 was set to to turn on/ enable ADC12, CTL1 was set to sample/ hold pulse mode, and 
 CTL2 was set to set ADC to 12 bit resolution. Then the ADC interrupt was enabled and the input select was chosen to bit 4.
 ```C
-    ADC12CTL0 = ADC12SHT0_2 | ADC12ON;	       	
+    ADC12CTL0 = ADC12SHT0_2 | ADC12ON;
     ADC12CTL1 = ADC12SHP;                     // ADCCLK = MODOSC; sampling timer
     ADC12CTL2 |= ADC12RES_2;                  // 12-bit conversion results
-    ADC12IER0 |= ADC12IE0;                    // Enable ADC conversion complete interrupt
-    ADC12MCTL0 |= ADC12INCH_4;                // A1 ADC input select
+    ADC12IER0 |= ADC12IE0;                    // Enable ADC conv complete interrupt
+    ADC12MCTL0 |= ADC12INCH_4 | ADC12VRSEL_1; // A4 ADC input select, Vref = 1.2V
 ```
 Within the Timer interrupt, CTL0 was then set to enable and sample ADC.
 ```C
@@ -68,7 +69,7 @@ the below calcuations were computed.
 
 As stated above the reference voltage was set to 3.3 V for ADC10 and 1.2V for ADC12. To find the value of each bit for ADC, 
 the reference voltage is divided by 2^(n); where n is the ADC resolution (for this code 10 or 12). So to find the voltage, the value in the 
-ADC memory register is multiplied by the either 0.0033 (ADC10) or 0.000293(ADC12). 
+ADC memory register is multiplied by the either 0.0033 (ADC10) or 0.000293(ADC12). Code below is for ADC12.
 
 ### Photoresistor
 After voltage is found, Ohm's law can be used to find the resistance of the photoresistor.
@@ -77,6 +78,7 @@ After voltage is found, Ohm's law can be used to find the resistance of the phot
     voltage = in * 0.000293;                      //converts ADC to voltage
     resistance=(3300.0/voltage) - 1000;           //Using ohms law we can find resistance
 ```
+
 ### Phototransistor
 After voltage is found, Ohm's law can be used to find the current.
 ```C
