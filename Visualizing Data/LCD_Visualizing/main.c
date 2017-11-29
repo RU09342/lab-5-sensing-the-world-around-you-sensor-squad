@@ -39,8 +39,10 @@ int main(void)
     __enable_interrupt();           //Enable interrupts
 	
 	while(1){
-	    tempAvg = ((tempAvg * count) + tempC)/(count + 1);
+	    tempAvg = ((tempAvg * count) + tempC)/(count + 1); //Take an average value to allow the displayed value to stabilize.
 	    count++;
+		if (count == 100)
+			count = 10;
 	    DisplayNumbers(tempAvg);      //displays temperature on LCD
 	}
 }

@@ -112,8 +112,7 @@ void DisplayNumbers(unsigned long num)      //Function takes in an integer of up
     }
 }
 ```
-After the the ADC returns a value for tempF, tempF is displayed on the LCD display. 
-![Alt Text] (Add link to video of this working)
+After the ADC returns a value for tempC, an average value of tempC is displayed on the LCD display. The reason the value is averaged is to filter out noisy signals. This allows the displayed value to stabilize instead of constantly fluctuating. 
 
 ## UART (MSP430FR5994)
 ### Requirements
