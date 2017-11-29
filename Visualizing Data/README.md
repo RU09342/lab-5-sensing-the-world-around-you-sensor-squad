@@ -115,7 +115,7 @@ void DisplayNumbers(unsigned long num)      //Function takes in an integer of up
 After the the ADC returns a value for tempF, tempF is displayed on the LCD display. 
 ![Alt Text] (Add link to video of this working)
 
-## UART (MSP430FR6989)
+## UART (MSP430FR5994)
 ### Requirements
 For the UART visualization, the board is connected to a computer via UART. For the MSP430 boards, the USB cable will work.
 
@@ -145,6 +145,6 @@ void UARTInit(void){
         UCA0IE |= UCRXIE;                           // Enable USCI_A0 RX interrupt
 }
 ```
-In order to actually plot the data on the computer, it is necessary to use MATLAB. The SerialDataPlot.m function was based on MathWorks code ([which can be found here](https://www.mathworks.com/matlabcentral/fileexchange/25519-collect-and-plot-data-from-an-instrument-in-real-time)). This function reads the input from the serial port and graphs the data after a minute of reading.
+In order to actually plot the data on the computer, it is necessary to use MATLAB. The SerialDataPlot.m function was based on MathWorks code ([which can be found here](https://www.mathworks.com/matlabcentral/fileexchange/25519-collect-and-plot-data-from-an-instrument-in-real-time)). This function sends a UART signal to the processor over the serial port. The processor interrupts when it receives this signal and sends the current value from the temperature sensor back over UART. The code then reads the input from the serial port and graphs the data.
 
-It may be necessary to configure the serial port based on how the microprocessor is connected. To do so, change the `COM12` in the `serialPort = 'COM12'` line to correctly reflect the COM port that your microprocessor is connected to. This can be found through device manager.
+It may be necessary to configure the serial port based on how the microprocessor is connected. To do so, change the `COM9` in the `serialPort = 'COM9'` line to correctly reflect the COM port that your microprocessor is connected to. This can be found through device manager.
