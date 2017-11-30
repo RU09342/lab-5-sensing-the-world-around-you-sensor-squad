@@ -45,8 +45,8 @@ The temperature sensor that was used was a LM35. The LM35 reads every 10mV as on
 For this lab ADC10 and ADC12 were implemented on seperate boards. The ADC10 was implemented on the MSP430G2553 and the ADC12 on the MSP430FR6989. 
 To begin initilzation of the ADC, a pin must be set on which the ADC will be taken (P1.7 ADC10 & P1.4 ADC12).
 ```C
-    P1SEL1 |= ADC12;                          // P8.7 for ADC
-    P1SEL0 |= ADC12;
+    P8SEL1 |= ADC12;                          // P8.7 for ADC
+    P8SEL0 |= ADC12;
 ```
 Other initializations that were needed for code to run properly were Timer Init, UART Init, and Clock Init.
 

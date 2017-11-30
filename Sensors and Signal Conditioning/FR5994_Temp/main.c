@@ -12,13 +12,21 @@ unsigned int temp;
 
 int main(void)
 {
-    P4SEL0 |= BIT2;          //Configure pin 4.2 for ADC
-    P4SEL1 |= BIT2;
-
     WDTCTL = WDTPW + WDTHOLD;               // Stop WDT
+    PM5CTL0 &= ~LOCKLPM5; //Disable HIGH Z mode
+    TB0CCTL0 = CCIE;                   //Enable interrupts for the first capture/compare register.
+    TB0CTL = TBSSEL_2 + MC_2 + ID_3; //Set the Clock_A control to:
+                                    //1. TASSEL_2 which selects SMCLK, the internal 1MHz clock.
+                                    //2. MC_2 which selects the continuous counting mode.
+                                    //3. ID_3 which sets an internal 8x clock divider.
+
+    P4SEL0 |= BIT2;          //Configure pin 4.2 for ADC channel 10.
+    P4SEL1 |= BIT2;
 
     ADCInit();              //initialize ADC
     UARTInit();             //Initialize UART
+
+    __enable_interrupt();           //Enable interrupts.
 
     while (1)
     {
@@ -28,22 +36,25 @@ int main(void)
 
   }
 
+#pragma vector=TIMER0_B0_VECTOR
+__interrupt void Timer_B (void) {
+    UCA0TXBUF = ADC12MEM0;                  //Write ADC value to UART.
+}
+
 //ADC ISR
 #pragma vector=ADC12_B_VECTOR
 __interrupt void ADC12ISR (void)
 {
-    UCA0TXBUF = ADC12MEM0;                  //Write ADC value to UART.
+
 }
 
 // Initialize ADC12_A
 void ADCInit(void){
-    REFCTL0 |= REFON + REFTCOFF + REFVSEL;  //Enable reference voltage at 2.5v
-    ADC12VRSEL = 0b0001;                    //Select the reference voltage as VREF.
+    REFCTL0 |= REFON + REFTCOFF + REFVSEL_0;  //Enable reference voltage at 1.2v
     ADC12CTL0 = ADC12SHT0_4 + ADC12ON;      //Initialize ADC12CTL0 with a 64 cycle sample time.
-    ADC12MCTL0 = ADC12INCH10;               //Set input channel 10.
+    ADC12MCTL0 = ADC12INCH_10 + ADC12VRSEL0_H;      //Set input channel 10 and use 1.2 volt reference.
     ADC12CTL1 = ADC12SHP;                   //Initialize ADC12CTL1 with sample and hold mode.
-    ADC12MCTL0 = ADC12SREF_1 + ADC12INCH0;  //Set conversion memory control register.'
-    ADC12IE = 0x01;                         //Enable ADC interrupts.
+    ADC12IER0 = 0x01;                       //Enable ADC interrupts.
     ADC12CTL0 |= ADC12ENC;                  //Enable conversion.
 
 }
@@ -65,5 +76,4 @@ void UARTInit(void){
     UCA0BRW = 52;                               // 8000000/16/9600
     UCA0MCTLW |= UCOS16 | UCBRF_1 | 0x4900;
     UCA0CTLW0 &= ~UCSWRST;                      // Initialize eUSCI
-    //UCA0IE |= UCRXIE;                           // Enable USCI_A0 RX interrupt
 }

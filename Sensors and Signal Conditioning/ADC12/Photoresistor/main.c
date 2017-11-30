@@ -5,7 +5,7 @@
 
 #include <msp430.h>
 
-#define ADC12 BIT7          //define ADC12 as BIT4
+#define ADC12 BIT7          //define ADC12 as BIT7
 #define LED1 BIT0           //define LED1 as BIT0
 #define RXD BIT0            //define RXD as BIT0
 #define TXD BIT1            //define TXD as BIT1

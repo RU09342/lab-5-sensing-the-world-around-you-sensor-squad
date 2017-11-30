@@ -27,7 +27,6 @@ int main(void)
 	TimerInit();                 //Timer Init function call
 	GPIOInit();                  //GPIO Init function call
     LCDCCTL0 |= LCDON;          //Turn on the LCD
-    DisplayNumbers(tempF);      //displays temperature
 
     while(REFCTL0 & REFGENBUSY);              // If ref generator busy, WAIT
        REFCTL0 |= REFVSEL_0 | REFON;             // Select internal ref = 2.5V
@@ -81,6 +80,7 @@ __interrupt void ADC12_ISR(void)
     voltage = in * 0.000293;        //converts ADC to voltage
     tempC= voltage/ 0.01;           //converts voltage to Temp C
     tempF=((9*tempC)/5)+32;             //Temp C to Temp F
+    DisplayNumbers(tempF);      //displays temperature on LCD
 }
 
 //Timer ISR

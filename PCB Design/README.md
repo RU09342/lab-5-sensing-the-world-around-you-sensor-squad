@@ -4,6 +4,8 @@
 ### Last Updated: 11/1/17
 
 ## Overview 
+This PCB is a breakout board for the MSP430FR2311. The breakout board features the processor itself, as well as several capacitors and a resistor. The resistor is important for the purpose of JTAG programming the processor. The 1nF capacitor serves the same purpose. The other two capacitors are for decoupling the power supply pin, which is highly recommended.
+
 ### Schematic
 
 

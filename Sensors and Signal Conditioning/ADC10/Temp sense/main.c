@@ -65,10 +65,10 @@ void ADC10Init()
 void TimerInit()
 {
     TACCTL0 = CCIE;                           // Enable interrupt
-    TACCR0 = 4096-1;                          // PWM Period
+    TACCR0 = 400;                             // PWM Period
     TACCTL1 = OUTMOD_3;                       // TACCR1 set/reset
-    TACCR1 = 256;                             // TACCR1 PWM Duty Cycle
-    TACTL = TASSEL_1 + MC_1 + ID_3;           // ACLK, UP MODE, DIV 4
+    TACCR1 = 300;                             // TACCR1 PWM Duty Cycle
+    TACTL = TASSEL_1 + MC_1;                  // ACLK, UP MODE, DIV 4
 }
 //UART Initialization
 void UARTInit()
