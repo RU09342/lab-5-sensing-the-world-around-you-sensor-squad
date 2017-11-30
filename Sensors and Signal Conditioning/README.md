@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Sensors and Signal Conditioning
 * Created by Ryan Hare & Jessica Wozniak
 * Created on 10/31/17
