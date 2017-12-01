@@ -30,8 +30,13 @@ pass when more light shines on it, or less current pass with less light. Also th
 if a higher value resistor is used, the photoresistor is more sensitive to light.
 
 ### Schematic 
+
+
 ![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/Phototransistor.PNG)
 ### Hardware
+
+
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/Phototransistor_Hardware.jpg)
 
 ## Temperature Sensor: Voltage
 The temperature sensor that was used was a LM35. The LM35 reads every 10mV as one degree C. The ADC was read directly at the output of the LM35. 
@@ -39,6 +44,8 @@ The temperature sensor that was used was a LM35. The LM35 reads every 10mV as on
 ![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/LM35_Schematic.PNG)
 ### Hardware
 
+
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/LM35_Hardware.jpg)
 ## Software
 
 ### ADC
