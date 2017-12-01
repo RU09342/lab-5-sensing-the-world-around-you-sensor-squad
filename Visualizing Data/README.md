@@ -7,15 +7,10 @@
 Using the ADC12 code implemented in the "Sensors and Signal Conditioning" part of this lab, different types of data visualizations were possible.
 ## RGB LED (MSP430FR5994)
 
-### Schematic 
-![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Visualizing%20Data/RGBLED/Assets/LEDCircuit.png.png)
-
-
-
 ### Hardware
 This software is meant to be run with a common anode RGB LED. The LED circuit is shown below.
 
-![RGBCircuit](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Visualizing%20Data/Assets/LEDCircuit.png)
+![RGBCircuit](https://raw.githubusercontent.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/master/Visualizing%20Data/Assets/LEDCircuit.png)
 
 ### Software
 Pin initialization was necessary to output the PWM of each colorin the RGB LED.
