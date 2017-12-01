@@ -19,6 +19,24 @@ This software is meant to be run with a common anode RGB LED. The LED circuit is
 
 
 ### Software
+Pin initialization was necessary to output the PWM of each colorin the RGB LED.
+```C
+void LEDInit(void){
+  
+    P3DIR |= RED;     //Pin 5.1
+    P3SEL1 &= ~RED;
+    P3SEL0 |= RED;
+
+    P3DIR |= GREEN;    //Pin 3.4
+    P3SEL1 &= ~GREEN;
+    P3SEL0 |= GREEN;
+
+    P1DIR |= BLUE;     //Pin 1.5
+    P1SEL1 &= ~BLUE;
+    P1SEL0 |= BLUE;
+
+}
+```
 Some minor additions to the ADC12 code were needed, including the following in the while(1) loop in the main that changes the color of 
 the LED based on the temperature sensed by the LM35. If the temperature is above 90 F, the LED will be red and if the temperature is below 30F,
  the LED will be blue. If the temperature is anywhere in between the LED will be maroon, pink, dark purple, indigo, blue, torquoise, or teal. 
