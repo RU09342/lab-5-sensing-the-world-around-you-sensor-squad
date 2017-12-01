@@ -8,6 +8,9 @@ Using the ADC12 code implemented in the "Sensors and Signal Conditioning" part o
 ## RGB LED (MSP430FR5994)
 ### Hardware
 This software is meant to be run with a common anode RGB LED. The LED circuit is shown below.
+
+![RGBCircuit](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Visualizing%20Data/Assets/LEDCircuit.png)
+
 ### Software
 Some minor additions to the ADC12 code were needed, including the following in the while(1) loop in the main that changes the color of 
 the LED based on the temperature sensed by the LM35. If the temperature is above 90 F, the LED will be red and if the temperature is below 30F,
