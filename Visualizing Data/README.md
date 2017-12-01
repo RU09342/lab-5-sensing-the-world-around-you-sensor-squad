@@ -6,8 +6,18 @@
 ## Overview 
 Using the ADC12 code implemented in the "Sensors and Signal Conditioning" part of this lab, different types of data visualizations were possible.
 ## RGB LED (MSP430FR5994)
+
+### Schematic 
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Visualizing%20Data/RGBLED/Assets/LEDCircuit.png.png)
+
+
+
 ### Hardware
-This software is meant to be run with a common anode RGB LED. The LED circuit is shown below.
+This software is meant to be run with a common anode RGB LED. The LED circuit is shown below. 
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/Hardware.jpg)
+
+
+
 ### Software
 Some minor additions to the ADC12 code were needed, including the following in the while(1) loop in the main that changes the color of 
 the LED based on the temperature sensed by the LM35. If the temperature is above 90 F, the LED will be red and if the temperature is below 30F,
@@ -71,6 +81,9 @@ the LED based on the temperature sensed by the LM35. If the temperature is above
     }
 }
 ```
+When the temperature was reading 71, the LED was pink. 
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/Expressions_TempSense.PNG)
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/blob/master/Photos/Pink%20LED.jpg)
 ## LCD Display (MSP430FR6989)
 ### Software
 With the addition of a LCDInit() function, a DisplayNumbers() function, and including the LCDDriver.h file, it was simple to intergrate the two codes 
