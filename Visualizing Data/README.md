@@ -13,7 +13,7 @@ This software is meant to be run with a common anode RGB LED. The LED circuit is
 ![RGBCircuit](https://raw.githubusercontent.com/RU09342/lab-5-sensing-the-world-around-you-sensor-squad/master/Visualizing%20Data/Assets/LEDCircuit.png.png)
 
 ### Software
-Pin initialization was necessary to output the PWM of each colorin the RGB LED.
+Pin initialization was necessary to output the PWM of each color in the RGB LED.
 ```C
 void LEDInit(void){
   
